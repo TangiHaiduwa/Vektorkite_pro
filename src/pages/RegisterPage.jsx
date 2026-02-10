@@ -15,9 +15,368 @@ import {
   ArrowLeft,
   Shield,
   Calendar,
-  FileText
+  FileText,
+  X,
+  Briefcase
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+
+// Modal Component
+const Modal = ({ isOpen, onClose, title, children }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" 
+        onClick={onClose}
+      />
+      
+      {/* Modal */}
+      <div className="flex items-center justify-center min-h-screen p-4">
+        <div className="relative bg-white rounded-2xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+          {/* Header */}
+          <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              aria-label="Close"
+            >
+              <X className="h-5 w-5 text-gray-500" />
+            </button>
+          </div>
+          
+          {/* Content */}
+          <div className="overflow-y-auto p-6 prose prose-blue max-w-none" style={{ maxHeight: 'calc(90vh - 80px)' }}>
+            {children}
+          </div>
+          
+          {/* Footer */}
+          <div className="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4">
+            <button
+              onClick={onClose}
+              className="w-full py-3 bg-gradient-to-r from-blue-600 to-teal-500 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-teal-600 transition-all"
+            >
+              Close & Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Terms Modal Content
+const TermsModalContent = () => (
+  <div>
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
+      <p className="text-gray-700 mb-4">
+        VectorKite ("the Platform") is a digital marketplace operated by Starkite Technologies, 
+        registered in the Republic of Namibia. VectorKite connects users with independent service 
+        providers such as handymen, plumbers, cleaners, and other professionals.
+      </p>
+      <p className="text-gray-700">
+        By using the Platform, you agree to these Terms.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Platform Nature</h2>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>VectorKite does not provide services directly</li>
+        <li>All service providers are independent contractors</li>
+        <li>Starkite Technologies is not an employer, agent, or partner of service providers</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Eligibility</h2>
+      <p className="text-gray-700 mb-2">You must:</p>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Be 18 years or older</li>
+        <li>Provide accurate information</li>
+        <li>Use the Platform lawfully</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Bookings & Payments</h2>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Prices are shown before booking confirmation</li>
+        <li>Payments may be processed via third-party providers</li>
+        <li>VectorKite may charge a platform service fee or commission</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Cancellations & Refunds</h2>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Cancellation rules may vary per service</li>
+        <li>Refunds are subject to provider and platform policies</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Ratings & Reviews</h2>
+      <p className="text-gray-700">
+        Users may submit honest feedback. Fake, abusive, or misleading content may be removed.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Liability Disclaimer</h2>
+      <p className="text-gray-700 mb-2">
+        To the fullest extent permitted by Namibian law:
+      </p>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Starkite Technologies and VectorKite are not liable for service quality, damages, injuries, or losses</li>
+        <li>Services are used at the user's own risk</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Disputes</h2>
+      <p className="text-gray-700">
+        Disputes should be resolved between the user and service provider. 
+        VectorKite may assist but is not obligated to mediate.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Intellectual Property</h2>
+      <p className="text-gray-700">
+        All platform content belongs to Starkite Technologies.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Termination</h2>
+      <p className="text-gray-700">
+        We may suspend or terminate accounts for violations.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Governing Law</h2>
+      <p className="text-gray-700">
+        Governed by the laws of the Republic of Namibia, including the Electronic Transactions Act, 2019.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Contact</h2>
+      <p className="text-gray-700">
+        Email: alexshapwa@gmail.com<br />
+        Starkite Technologies<br />
+        Namibia
+      </p>
+    </div>
+
+    <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mt-8">
+      <div className="flex items-start">
+        <Shield className="h-6 w-6 text-blue-600 mr-3 mt-1" />
+        <div>
+          <h3 className="font-semibold text-blue-900 mb-2">Acceptance Required</h3>
+          <p className="text-blue-800">
+            By proceeding with registration, you confirm that you have read, understood, 
+            and agree to these Terms & Conditions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Privacy Modal Content
+const PrivacyModalContent = () => (
+  <div>
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Data Controller</h2>
+      <p className="text-gray-700">
+        Starkite Technologies operates VectorKite and controls user data.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Data We Collect</h2>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Name</li>
+        <li>Phone number</li>
+        <li>Email</li>
+        <li>Location data</li>
+        <li>Booking history</li>
+        <li>Ratings & reviews</li>
+        <li>Payment data (handled by third parties)</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Use of Data</h2>
+      <p className="text-gray-700 mb-2">We use your data for:</p>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Account management</li>
+        <li>Service matching</li>
+        <li>Payments & bookings</li>
+        <li>Security & fraud prevention</li>
+        <li>Customer support</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Data Sharing</h2>
+      <p className="text-gray-700 mb-2">We share data only with:</p>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Service providers (booking-related info only)</li>
+        <li>Payment processors</li>
+        <li>Authorities if legally required</li>
+      </ul>
+      <p className="text-gray-700 mt-4 font-semibold">
+        We do not sell your personal data to third parties.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Data Security</h2>
+      <p className="text-gray-700">
+        We implement reasonable technical and organizational safeguards to protect your data.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">6. User Rights</h2>
+      <p className="text-gray-700 mb-2">You have the right to:</p>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Access your data</li>
+        <li>Request correction or deletion</li>
+        <li>Withdraw consent</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Location Services</h2>
+      <p className="text-gray-700">
+        Used only to match nearby providers. Users can disable location permissions.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Children</h2>
+      <p className="text-gray-700">
+        Our platform is not intended for users under 18 years of age.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Updates</h2>
+      <p className="text-gray-700">
+        Policy updates will be posted on the platform. Continued use constitutes acceptance.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Contact</h2>
+      <p className="text-gray-700">
+        Email: alexshapwa@gmail.com<br />
+        Starkite Technologies<br />
+        Namibia
+      </p>
+    </div>
+
+    <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mt-8">
+      <div className="flex items-start">
+        <Shield className="h-6 w-6 text-blue-600 mr-3 mt-1" />
+        <div>
+          <h3 className="font-semibold text-blue-900 mb-2">Your Privacy Matters</h3>
+          <p className="text-blue-800">
+            By proceeding with registration, you acknowledge that you have read and 
+            understood how we handle your personal information.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Provider Agreement Modal Content
+const ProviderAgreementModalContent = () => (
+  <div>
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Relationship</h2>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Service providers are independent contractors, not employees</li>
+        <li>No employment benefits, salary, or guaranteed work</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Provider Obligations</h2>
+      <p className="text-gray-700 mb-2">Providers must:</p>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Perform services professionally</li>
+        <li>Use own tools & materials</li>
+        <li>Comply with Namibian laws</li>
+        <li>Maintain accurate profile info</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Payments</h2>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Providers receive payments minus platform commission</li>
+        <li>Payments processed via approved methods</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Ratings & Deactivation</h2>
+      <p className="text-gray-700">
+        Poor ratings, misconduct, or fraud may lead to suspension or removal from the platform.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Liability</h2>
+      <p className="text-gray-700 mb-2">Providers are solely responsible for:</p>
+      <ul className="list-disc pl-5 text-gray-700 space-y-2">
+        <li>Service quality</li>
+        <li>Safety</li>
+        <li>Damages or losses</li>
+      </ul>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Termination</h2>
+      <p className="text-gray-700">
+        Either party may terminate access at any time in accordance with platform policies.
+      </p>
+    </div>
+
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Governing Law</h2>
+      <p className="text-gray-700">
+        This agreement is governed by the laws of the Republic of Namibia.
+      </p>
+    </div>
+
+    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mt-8">
+      <div className="flex items-start">
+        <Briefcase className="h-6 w-6 text-yellow-600 mr-3 mt-1" />
+        <div>
+          <h3 className="font-semibold text-yellow-900 mb-2">Important Notes for Service Providers</h3>
+          <ul className="list-disc pl-5 text-yellow-800 space-y-2">
+            <li>You are responsible for your own business insurance and certifications</li>
+            <li>You set your own rates and availability</li>
+            <li>The platform facilitates connections but you manage client relationships</li>
+            <li>Tax obligations remain your responsibility</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 // Validation schema
 const registerSchema = z.object({
@@ -62,6 +421,11 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [registrationStep, setRegistrationStep] = useState(1);
+  
+  // Modal states
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [showProviderAgreementModal, setShowProviderAgreementModal] = useState(false);
 
   const {
     register,
@@ -103,7 +467,6 @@ export default function RegisterPage() {
       const age = calculateAge(data.date_of_birth);
       console.log('Age calculated:', age);
       
-      // Clean, correct signup (provider-only)
       console.log('Step 1: Creating auth user...');
       
       const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -144,20 +507,15 @@ export default function RegisterPage() {
       }
 
       console.log('Auth user created:', authData.user.id);
-
-      // IMPORTANT
       console.log('Email confirmation sent. Waiting for verification.');
 
-      // SUCCESS - Show success message
       console.log('Registration successful!');
       setRegistrationStep(2);
       
-      // Check if email was sent
       if (authData.user && !authData.session) {
         toast.success('Registration successful! Please check your email (including spam folder) to verify your account.');
       } else if (authData.session) {
         toast.success('Registration successful! Your account is now active.');
-        // Auto-redirect to thank you page after 3 seconds
         setTimeout(() => {
           navigate('/thank-you');
         }, 3000);
@@ -168,7 +526,6 @@ export default function RegisterPage() {
     } catch (error) {
       console.error('Registration process error:', error);
       
-      // More detailed error messages
       let errorMessage = 'Registration failed. Please try again.';
       
       if (error.message.includes('already registered')) {
@@ -184,8 +541,6 @@ export default function RegisterPage() {
       }
       
       toast.error(errorMessage);
-      
-      // Show debug info in console
       console.log('Full error object:', error);
     } finally {
       setIsLoading(false);
@@ -216,6 +571,31 @@ export default function RegisterPage() {
         </div>
       </nav>
 
+      {/* Modals */}
+      <Modal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+        title="Terms & Conditions"
+      >
+        <TermsModalContent />
+      </Modal>
+
+      <Modal
+        isOpen={showPrivacyModal}
+        onClose={() => setShowPrivacyModal(false)}
+        title="Privacy Policy"
+      >
+        <PrivacyModalContent />
+      </Modal>
+
+      <Modal
+        isOpen={showProviderAgreementModal}
+        onClose={() => setShowProviderAgreementModal(false)}
+        title="Service Provider Agreement"
+      >
+        <ProviderAgreementModalContent />
+      </Modal>
+
       <div className="max-w-md mx-auto px-4 py-12">
         {/* Progress Steps */}
         <div className="flex items-center justify-center mb-10">
@@ -243,7 +623,6 @@ export default function RegisterPage() {
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              {/* Form fields remain the same as before */}
               {/* Full Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -334,9 +713,7 @@ export default function RegisterPage() {
                 )}
                 {age !== null && age < 18 && (
                   <p className="mt-1 text-sm text-red-600 flex items-center">
-                    <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <X className="h-4 w-4 mr-1" />
                     You must be 18 or older to register
                   </p>
                 )}
@@ -426,14 +803,13 @@ export default function RegisterPage() {
                   <div className="ml-3">
                     <label htmlFor="accept_terms" className="text-sm text-gray-700">
                       I accept the{' '}
-                      <Link 
-                        to="/terms" 
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 font-medium underline"
+                      <button
+                        type="button"
+                        onClick={() => setShowTermsModal(true)}
+                        className="text-blue-600 hover:text-blue-800 font-medium underline focus:outline-none"
                       >
                         Terms & Conditions
-                      </Link>
+                      </button>
                     </label>
                     {errors.accept_terms && (
                       <p className="mt-1 text-sm text-red-600">{errors.accept_terms.message}</p>
@@ -454,14 +830,13 @@ export default function RegisterPage() {
                   <div className="ml-3">
                     <label htmlFor="accept_privacy" className="text-sm text-gray-700">
                       I accept the{' '}
-                      <Link 
-                        to="/privacy" 
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 font-medium underline"
+                      <button
+                        type="button"
+                        onClick={() => setShowPrivacyModal(true)}
+                        className="text-blue-600 hover:text-blue-800 font-medium underline focus:outline-none"
                       >
                         Privacy Policy
-                      </Link>
+                      </button>
                     </label>
                     {errors.accept_privacy && (
                       <p className="mt-1 text-sm text-red-600">{errors.accept_privacy.message}</p>
@@ -473,14 +848,13 @@ export default function RegisterPage() {
                 <div className="text-xs text-gray-600 mt-2">
                   <p>
                     By registering as a service provider, you also acknowledge the{' '}
-                    <Link 
-                      to="/provider-agreement" 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 underline"
+                    <button
+                      type="button"
+                      onClick={() => setShowProviderAgreementModal(true)}
+                      className="text-blue-600 hover:text-blue-800 underline focus:outline-none"
                     >
                       Service Provider Agreement
-                    </Link>
+                    </button>
                     .
                   </p>
                 </div>
@@ -541,7 +915,6 @@ export default function RegisterPage() {
                 </ul>
               </div>
               
-              {/* Debug info - only show in development */}
               {process.env.NODE_ENV === 'development' && (
                 <div className="mt-6 p-4 bg-gray-100 rounded-lg text-left">
                   <p className="text-sm text-gray-600 font-semibold">Debug Info:</p>
