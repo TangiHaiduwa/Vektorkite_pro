@@ -147,8 +147,8 @@ const VerifyEmailPage = () => {
           <div className="mt-8 pt-6 border-t border-gray-200">
             <p className="text-sm text-gray-500">
               Having trouble? Contact us at{' '}
-              <a href="mailto:support@vektorkite.com" className="text-blue-600 hover:text-blue-800">
-                support@vektorkite.com
+              <a href="mailto:alexshapwa@gmail.com" className="text-blue-600 hover:text-blue-800">
+                alexshapwa@gmail.com
               </a>
             </p>
           </div>
@@ -157,7 +157,7 @@ const VerifyEmailPage = () => {
         <div className="mt-8">
           <div className="flex items-center justify-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-teal-500 rounded-lg"></div>
-            <span className="text-lg font-bold text-gray-900">VektorKite</span>
+            <span className="text-lg font-bold text-gray-900">VectorKite</span>
             <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">
               PRO
             </span>

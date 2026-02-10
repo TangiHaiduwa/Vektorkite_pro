@@ -203,7 +203,7 @@ export default function RegisterPage() {
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-teal-500 rounded-lg"></div>
-              <span className="text-lg font-bold text-gray-900">VektorKite</span>
+              <span className="text-lg font-bold text-gray-900">VectorKite</span>
             </Link>
             <Link
               to="/"
@@ -238,7 +238,7 @@ export default function RegisterPage() {
                 Join as Service Provider
               </h1>
               <p className="text-gray-600">
-                Create your account and be among the first to join VektorKite Pro
+                Create your account and be among the first to join VectorKite Pro
               </p>
             </div>
 
@@ -509,7 +509,7 @@ export default function RegisterPage() {
               <div className="text-center pt-4 border-t border-gray-200">
                 <p className="text-gray-600 text-sm">
                   Already registered? You'll be able to sign in when the{' '}
-                  <span className="font-semibold text-blue-600">VektorKite Pro app</span> launches.
+                  <span className="font-semibold text-blue-600">VectorKite Pro app</span> launches.
                 </p>
               </div>
             </form>
@@ -536,7 +536,7 @@ export default function RegisterPage() {
                 </p>
                 <ul className="text-blue-700 text-sm mt-2 list-disc pl-5 text-left">
                   <li>Check your email for verification instructions (including spam folder)</li>
-                  <li>Complete your profile when the VektorKite Pro app launches</li>
+                  <li>Complete your profile when the VectorKite Pro app launches</li>
                   <li>You'll be notified when the platform is live</li>
                 </ul>
               </div>

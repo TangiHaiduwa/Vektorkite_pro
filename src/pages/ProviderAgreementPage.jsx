@@ -10,7 +10,7 @@ const ProviderAgreementPage = () => {
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-teal-500 rounded-lg"></div>
-              <span className="text-lg font-bold text-gray-900">VektorKite</span>
+              <span className="text-lg font-bold text-gray-900">VectorKite</span>
             </Link>
             <Link
               to="/register"
@@ -32,7 +32,7 @@ const ProviderAgreementPage = () => {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Service Provider Agreement</h1>
-              <p className="text-gray-600">For registered service providers on VektorKite</p>
+              <p className="text-gray-600">For registered service providers on VectorKite</p>
             </div>
           </div>
 

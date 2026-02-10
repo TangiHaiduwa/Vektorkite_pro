@@ -138,7 +138,7 @@ const LandingPage = () => {
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-100 to-blue-100 rounded-full mb-12">
             <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse"></div>
             <span className="font-semibold text-purple-800">
-              VektorKite Pro App Launching Soon!
+              VectorKite Pro App Launching Soon!
             </span>
           </div>
 

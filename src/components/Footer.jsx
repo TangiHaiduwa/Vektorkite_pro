@@ -12,7 +12,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-teal-400 rounded-lg"></div>
-              <span className="text-xl font-bold">VektorKite</span>
+              <span className="text-xl font-bold">VectorKite</span>
             </div>
             <p className="text-gray-400 mb-6">
               Building Namibia's premier platform for skilled service professionals 
@@ -97,7 +97,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-blue-400" />
-                <span className="text-gray-400">+264 61 123 4567</span>
+                <span className="text-gray-400">+264 81 815 7224</span>
               </li>
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-blue-400 mt-1" />
@@ -131,7 +131,7 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-gray-500 text-sm mt-3">
-              VektorKite Pro mobile app launching soon. Register now to secure your early access.
+              VectorKite Pro mobile app launching soon. Register now to secure your early access.
             </p>
           </div>
         </div>

@@ -10,7 +10,7 @@ const ThankYouPage = () => {
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-teal-500 rounded-lg"></div>
-              <span className="text-lg font-bold text-gray-900">VektorKite</span>
+              <span className="text-lg font-bold text-gray-900">VectorKite</span>
             </Link>
           </div>
         </div>
@@ -35,7 +35,7 @@ const ThankYouPage = () => {
           <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-6 text-center text-white shadow-lg">
             <div className="inline-flex items-center gap-3 mb-4">
               <div className="h-4 w-4 bg-green-400 rounded-full animate-pulse"></div>
-              <h2 className="text-2xl font-bold">VektorKite Pro App Coming Soon!</h2>
+              <h2 className="text-2xl font-bold">VectorKite Pro App Coming Soon!</h2>
             </div>
             <p className="text-purple-100 mb-6">
               We're building something amazing for you. Get ready to connect with clients and grow your business like never before.
@@ -133,8 +133,8 @@ const ThankYouPage = () => {
           <div>
             <p className="text-gray-500">
               Questions? Contact us at{' '}
-              <a href="mailto:support@vektorkite.com" className="text-blue-600 hover:text-blue-800 font-medium">
-                support@vektorkite.com
+              <a href="mailto:alexshapwa@gmail.com" className="text-blue-600 hover:text-blue-800 font-medium">
+                alexshapwa@gmail.com
               </a>
             </p>
           </div>
